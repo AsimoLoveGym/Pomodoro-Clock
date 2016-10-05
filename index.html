@@ -11,20 +11,43 @@
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Orbitron" rel="stylesheet">
 
+
+
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+
 
   </head>
   <body>
     <main class="container">
 
       <div clss="row">
-        <div class="center-block text-center" id="calculator-body">
+        <div class="center-block text-center" id="pomodoro-clock-body">
           <h4 id="calculator-title">Pomodoro Timer</h4>
-          <h3 id="timer"></h3>
+          <div class="row row-eq-height">
+            <div class="col-xs-4" id="">
+              <p>Work: <span id="workTimeLabel">25</span> mins</p>
+            </div>
+            <div class="col-xs-8">
+              <input class="slider" id="workTime" type="range" min="1" max="60" value="25" step="1" onchange="setWorkTime(this.value)" />
+            </div>
+          </div>
 
-        </div><!-- end of "" div -->
+          <div class="row row-eq-height">
+            <div class="col-xs-4" id="">
+              <p>Break: <span id="breakTimeLabel">05</span> mins</p>
+            </div>
+            <div class="col-xs-8">
+              <input class="slider" id="breakTime" type="range" min="1" max="20" value="5" step="1" onchange="setBreakTime(this.value)" />
+            </div>
+          </div>
+
+          <div class="col-xs-12">
+            <h3 id="timer"></h3>
+          </div>
+
+        </div><!-- end of "clock-body" div -->
 
       </div> <!-- End of "row" div -->
 

@@ -1,3 +1,34 @@
+// ********************* Below Slider Module *******************
+
+// $("#workTime").on("change", function() {
+//   $("#workTimeLabel").text();
+// });
+
+function setWorkTime(workVal){
+  // $("#workTimeLabel").text($("#workTime").val());
+  workVal = checkTime(workVal);
+  $("#workTimeLabel").text(workVal);
+
+}
+
+function setBreakTime(breakVal){
+  breakVal = checkTime(breakVal);
+  $("#breakTimeLabel").text(breakVal);
+}
+
+// $("#breakTime").slider();
+// $("#breakTime").on("change", function(slideEvt) {
+//   $("#breakTimeLabel").text(slideEvt.value);
+// });
+
+//
+// var slider = new Slider("#workTime");
+// slider.on("slide", function(slideEvt) {
+// 	$("#workTimeLabel").text(slideEvt.value);
+// });
+
+
+// ********************* Below Timer Module *******************
 $(document).ready(function(){
   timer(60);
 });

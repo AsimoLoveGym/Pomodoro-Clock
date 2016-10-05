@@ -1,0 +1,11 @@
+
+.slider {
+  height: 20px;
+}
+
+/*414px is the device width of iphone 6 plus*/
+@media (min-width: 414px) {
+  #pomodoro-clock-body {
+    width: 414px;
+  }
+}
