@@ -3,6 +3,32 @@
   height: 20px;
 }
 
+#timer {
+  color: white;
+  font-size: 72px;
+  margin-top: 110px;
+}
+
+/*.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}*/
+
+#timer-container {
+  height: 350px;
+  /*background-image: url(../image/pomodoro-timer.png);*/
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(../image/pomodoro-timer.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 15px;
+}
+
 /*414px is the device width of iphone 6 plus*/
 @media (min-width: 414px) {
   #pomodoro-clock-body {
