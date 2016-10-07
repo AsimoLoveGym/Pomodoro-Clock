@@ -1,3 +1,13 @@
+// var workTime = 25 * 60;
+// var breakTime = 5 * 60;
+
+// for quick test
+var workTime = 5;
+var breakTime = 5;
+
+var workCompleted = false;
+
+
 // ********************* Below Slider Module *******************
 
 // $("#workTime").on("change", function() {
@@ -7,12 +17,14 @@
 function setWorkTime(workVal){
   // $("#workTimeLabel").text($("#workTime").val());
   workVal = checkTime(workVal);
+  workTime = workVal * 60;
   $("#workTimeLabel").text(workVal);
 
 }
 
 function setBreakTime(breakVal){
   breakVal = checkTime(breakVal);
+  breakTime = breakVal * 60;
   $("#breakTimeLabel").text(breakVal);
 }
 
@@ -30,7 +42,11 @@ function setBreakTime(breakVal){
 
 // ********************* Below Timer Module *******************
 $(document).ready(function(){
-  timer(60);
+  // timer(60);
+  $("#play").on("click",function(){
+    timer(workTime);
+    // console.log("done");
+  });
 });
 
 
@@ -42,7 +58,14 @@ function timer(time){
   $("#timer").html(minutes + ":" + seconds);
   time = time - 1;
   var t= setTimeout(timer,1000,time);
-  if (time === -1) {
+  if (time === -1 && workCompleted === false) {
+    clearTimeout(t);
+    console.log("It's break time!");
+    workCompleted = true;
+    time = breakTime;
+    timer(breakTime);
+  } else if (time === -1 && workCompleted) {
+    console.log("Should be cleared!");
     clearTimeout(t);
   }
 }
