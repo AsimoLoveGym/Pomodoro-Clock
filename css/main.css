@@ -1,3 +1,18 @@
+/* Work Mode Color */
+#pomodoro-clock-body {
+  background: -webkit-linear-gradient(left, rgba(212,106,106,0.2), rgba(212,106,106,0.5));
+  background: -o-linear-gradient(right, rgba(212,106,106,0.2), rgba(212,106,106,0.5));
+  background: -moz-linear-gradient(right, rgba(212,106,106,0.2), rgba(212,106,106,0.5));
+  background: linear-gradient(to right, rgba(212,106,106,0.2), rgba(212,106,106,0.5));
+}
+
+/* Break Mode Color */
+/*#pomodoro-clock-body {
+  background: -webkit-linear-gradient(left, rgba(77,171,77,0.2), rgba(77,171,77,0.5));
+  background: -o-linear-gradient(right, rgba(77,171,77,0.2), rgba(77,171,77,0.5));
+  background: -moz-linear-gradient(right, rgba(77,171,77,0.2), rgba(77,171,77,0.5));
+  background: linear-gradient(to right, rgba(77,171,77,0.2), rgba(77,171,77,0.5));
+}*/
 
 .slider {
   height: 20px;
@@ -22,11 +37,15 @@
 
 #timer-container {
   height: 350px;
-  /*background-image: url(../image/pomodoro-timer.png);*/
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(../image/pomodoro-timer.png);
+  background-image: url(../image/pomodoro-timer.png);
+  /*background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(../image/pomodoro-timer.png);*/
   background-position: center;
   background-repeat: no-repeat;
   padding: 15px;
+}
+
+#inner-timer-control {
+  width: 200px;
 }
 
 /*414px is the device width of iphone 6 plus*/
