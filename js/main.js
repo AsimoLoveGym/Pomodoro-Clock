@@ -2,8 +2,8 @@
 // var breakTime = 5 * 60;
 
 // for quick test
-var workTime = 5;
-var breakTime = 5;
+var workTime = 2;
+var breakTime = 2;
 
 var workCompleted = false;
 
@@ -44,10 +44,26 @@ function setBreakTime(breakVal){
 $(document).ready(function(){
   // timer(60);
   $("#play").on("click",function(){
+    workModeEntered();
     timer(workTime);
     // console.log("done");
   });
 });
+
+function workModeEntered(){
+  console.log("work Mode Entered!");
+  // $("#workTime").disabled = true;
+  document.getElementById('workTime').disabled = true;
+  document.getElementById('breakTime').disabled = true;
+  $('#play').toggle();
+
+}
+
+function breakModeEntered(){
+  $("#background-image").addClass("break-mode-img");
+  // console.log($("#background-image").classList());
+  $("#pomodoro-clock-body").addClass("break-mode-clock-body");
+}
 
 
 function timer(time){
@@ -62,6 +78,7 @@ function timer(time){
     clearTimeout(t);
     console.log("It's break time!");
     workCompleted = true;
+    breakModeEntered();
     time = breakTime;
     timer(breakTime);
   } else if (time === -1 && workCompleted) {
