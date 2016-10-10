@@ -1,25 +1,26 @@
-// var workTime = 25 * 60;
-// var breakTime = 5 * 60;
+
+// Default value for work session and break length.
+var workTime = 25 * 60;
+var breakTime = 5 * 60;
+var t = 0;
+var timing = 0;
 
 // for quick test
-var workTime = 2;
-var breakTime = 2;
+// var workTime = 10;
+// var breakTime = 10;
 
+// flag for changing app styling
 var workCompleted = false;
+// var pause = false;
+// var resetVal = false;
 
-
-// ********************* Below Slider Module *******************
-
-// $("#workTime").on("change", function() {
-//   $("#workTimeLabel").text();
-// });
-
+// ********************* Below Time Slider Module *******************
 function setWorkTime(workVal){
-  // $("#workTimeLabel").text($("#workTime").val());
   workVal = checkTime(workVal);
   workTime = workVal * 60;
+  timing = workTime;
   $("#workTimeLabel").text(workVal);
-
+  $("#timer").html(workVal + ":00");
 }
 
 function setBreakTime(breakVal){
@@ -28,65 +29,107 @@ function setBreakTime(breakVal){
   $("#breakTimeLabel").text(breakVal);
 }
 
-// $("#breakTime").slider();
-// $("#breakTime").on("change", function(slideEvt) {
-//   $("#breakTimeLabel").text(slideEvt.value);
-// });
-
-//
-// var slider = new Slider("#workTime");
-// slider.on("slide", function(slideEvt) {
-// 	$("#workTimeLabel").text(slideEvt.value);
-// });
-
-
-// ********************* Below Timer Module *******************
+// ********************* Below Timer Controller Module *******************
 $(document).ready(function(){
-  // timer(60);
+  $('#pause').toggle();
+  timing = workTime;
   $("#play").on("click",function(){
+    // for Display
     workModeEntered();
-    timer(workTime);
-    // console.log("done");
+    // Timing function called
+    timer(timing);
+  });
+  $("#pause").on("click",function(){
+    // once clicked, disable pause buttong and show play button
+    $('#play').toggle();
+    $('#pause').toggle();
+    // Stop timing
+    clearTimeout(t);
+  });
+  $("#reset").on("click",function(){
+    // Stop Timing and reset all to initial status
+    clearTimeout(t);
+    reset();
   });
 });
 
-function workModeEntered(){
-  console.log("work Mode Entered!");
-  // $("#workTime").disabled = true;
-  document.getElementById('workTime').disabled = true;
-  document.getElementById('breakTime').disabled = true;
-  $('#play').toggle();
-
-}
-
-function breakModeEntered(){
-  $("#background-image").addClass("break-mode-img");
-  // console.log($("#background-image").classList());
-  $("#pomodoro-clock-body").addClass("break-mode-clock-body");
-}
-
-
+// ********************* Below Timer Function *******************
 function timer(time){
+  //
+  t = setTimeout(timer,1000,time-1);
+  console.log(t);
   var minutes = Math.floor(time/60);
   var seconds = time%60;
   minutes = checkTime(minutes);
   seconds = checkTime(seconds);
   $("#timer").html(minutes + ":" + seconds);
-  time = time - 1;
-  var t= setTimeout(timer,1000,time);
-  if (time === -1 && workCompleted === false) {
+  console.log("Counting!");
+
+  timing = timing - 1;
+
+  if (timing === -1 && workCompleted === false) {
+    // work period done, break time started
     clearTimeout(t);
     console.log("It's break time!");
     workCompleted = true;
+    // change the app styling
     breakModeEntered();
-    time = breakTime;
+    // start break time timing right now
+    timing = breakTime;
     timer(breakTime);
-  } else if (time === -1 && workCompleted) {
+  } else if (timing === -1 && workCompleted) {
+    // one Pomodoro cycle finished, stop timing and reset all the settings.
     console.log("Should be cleared!");
     clearTimeout(t);
+    reset();
   }
 }
 
+// ********************* Below For App Styling Change *******************
+// For work mode styling
+function workModeEntered(){
+  console.log("work Mode Entered!");
+  document.getElementById('workTime').disabled = true;
+  document.getElementById('breakTime').disabled = true;
+  // once clicked, disable play button and show pause button
+  $('#pause').toggle();
+  $('#play').toggle();
+}
+
+// For break mode styling
+function breakModeEntered(){
+  $("#background-image").addClass("break-mode-img");
+  $("#pomodoro-clock-body").addClass("break-mode-clock-body");
+}
+
+// For reset mode
+function reset() {
+  document.getElementById('workTime').disabled = false;
+  document.getElementById('breakTime').disabled = false;
+
+  workTime = Number($("#workTimeLabel").html()) * 60;
+  breakTime = Number($("#breakTimeLabel").html()) * 60;
+  var initialMinutes = Math.floor(workTime/60);
+  var initialSeconds = workTime%60;
+  initialMinutes = checkTime(initialMinutes);
+  initialSeconds = checkTime(initialSeconds);
+  $("#timer").html(initialMinutes + ":" + initialSeconds);
+
+  timing = workTime;
+  workCompleted = false;
+  // delay the resetVal setting a little bit, make sure clear the setTimeout in timer function.
+  setTimeout(function () {
+    resetVal = false;
+  }, 1000);
+  $('#pause').hide();
+  $('#play').show();
+
+  $("#background-image").removeClass("break-mode-img");
+  $("#pomodoro-clock-body").removeClass("break-mode-clock-body");
+}
+
+// ********************* Below For Time Value Check *******************
+// Make sure every number on page is two-digits
 function checkTime(i) {
   if (i < 10) {
     i = "0" + i;
