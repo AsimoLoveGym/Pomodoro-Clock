@@ -4,6 +4,10 @@ var workTime = 25 * 60;
 var breakTime = 5 * 60;
 var t = 0;
 var timing = 0;
+var buttonClick1 = new Audio("sounds/Click On-SoundBible.com-1697535117.mp3");
+var buttonClick2 = new Audio("sounds/Button-Click-On-SoundBible.com-459633989.mp3");
+var buttonClick3 = new Audio("sounds/Button-Click-Off-SoundBible.com-1730098776.mp3");
+var tickTock = new Audio("sounds/Tick Tock-SoundBible.com-1165545065.mp3");
 
 // for quick test
 // var workTime = 10;
@@ -11,14 +15,14 @@ var timing = 0;
 
 // flag for changing app styling
 var workCompleted = false;
-// var pause = false;
-// var resetVal = false;
 
 // ********************* Below Time Slider Module *******************
 function setWorkTime(workVal){
   workVal = checkTime(workVal);
   workTime = workVal * 60;
+  // work time always come first with timing
   timing = workTime;
+  // change both the number beside slider and the number in the clock
   $("#workTimeLabel").text(workVal);
   $("#timer").html(workVal + ":00");
 }
@@ -32,14 +36,17 @@ function setBreakTime(breakVal){
 // ********************* Below Timer Controller Module *******************
 $(document).ready(function(){
   $('#pause').toggle();
+  // work time always come first with timing
   timing = workTime;
   $("#play").on("click",function(){
+    buttonClick1.play();
     // for Display
     workModeEntered();
     // Timing function called
     timer(timing);
   });
   $("#pause").on("click",function(){
+    buttonClick2.play();
     // once clicked, disable pause buttong and show play button
     $('#play').toggle();
     $('#pause').toggle();
@@ -47,6 +54,7 @@ $(document).ready(function(){
     clearTimeout(t);
   });
   $("#reset").on("click",function(){
+    buttonClick3.play();
     // Stop Timing and reset all to initial status
     clearTimeout(t);
     reset();
@@ -57,15 +65,16 @@ $(document).ready(function(){
 function timer(time){
   //
   t = setTimeout(timer,1000,time-1);
-  console.log(t);
   var minutes = Math.floor(time/60);
   var seconds = time%60;
   minutes = checkTime(minutes);
   seconds = checkTime(seconds);
   $("#timer").html(minutes + ":" + seconds);
-  console.log("Counting!");
-
   timing = timing - 1;
+
+  if (timing === 4){
+    tickTock.play();
+  }
 
   if (timing === -1 && workCompleted === false) {
     // work period done, break time started
